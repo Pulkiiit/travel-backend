@@ -31,12 +31,13 @@ const invoiceGenerator = data => {
 app.listen(4000);
 
 //middleware
-app.use(
-  cors({
-    credentials: true,
-    origin: "http://localhost:5173",
-  })
-);
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 const photoMiddleware = multer({ dest: "uploads" });
