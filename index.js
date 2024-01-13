@@ -34,7 +34,7 @@ app.listen(4000);
 app.use(
   cors({
     credentials: true,
-    origin: "https://airbnb-clone-frontend-nu.vercel.app/",
+    origin: "http://localhost:5173",
   })
 );
 app.use(cookieParser());
