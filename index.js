@@ -17,13 +17,14 @@ const cookieParser = require("cookie-parser");
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret =
   "nG8D#%-FpF+AK7b5b|tgy}B:UMzL/%&Y5>)?1c=@O 4,R!L!(?e8Lfvv`MNO#4Fs";
-const corsOptions = {
-  origin: "https://airbnb-clone-frontend-nu.vercel.app/",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true,
-  optionsSuccessStatus: 204,
-};
-app.use(cors(corsOptions));
+
+// const corsOptions = {
+//   origin: "https://airbnb-clone-frontend-nu.vercel.app/",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true,
+//   optionsSuccessStatus: 204,
+// };
+app.use(cors());
 // const invoiceGenerator = data => {
 //   easyinvoice.createInvoice(data, function (result) {
 //     fs.writeFileSync(
@@ -34,7 +35,7 @@ app.use(cors(corsOptions));
 //   });
 // };
 
-app.listen(4000);
+app.listen(process.env.PORT || 4000);
 
 //middleware
 app.use(cookieParser());
