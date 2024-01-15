@@ -17,25 +17,25 @@ const cookieParser = require("cookie-parser");
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret =
   "nG8D#%-FpF+AK7b5b|tgy}B:UMzL/%&Y5>)?1c=@O 4,R!L!(?e8Lfvv`MNO#4Fs";
-
-const invoiceGenerator = data => {
-  easyinvoice.createInvoice(data, function (result) {
-    fs.writeFileSync(
-      __dirname + "/invoice/invoice_" + Date.now() + ".pdf",
-      result.pdf,
-      "base64"
-    );
-  });
-};
 const corsOptions = {
   origin: "https://airbnb-clone-frontend-nu.vercel.app/",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
 };
+app.use(cors(corsOptions));
+// const invoiceGenerator = data => {
+//   easyinvoice.createInvoice(data, function (result) {
+//     fs.writeFileSync(
+//       __dirname + "/invoice/invoice_" + Date.now() + ".pdf",
+//       result.pdf,
+//       "base64"
+//     );
+//   });
+// };
 
 app.listen(4000);
-app.use(cors(corsOptions));
+
 //middleware
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
@@ -276,7 +276,7 @@ app.post("/booking-update", async (req, res) => {
       currency: "INR",
     },
   };
-  invoiceGenerator(data);
+  // invoiceGenerator(data);
   res.send("ok");
 });
 
