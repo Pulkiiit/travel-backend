@@ -27,17 +27,16 @@ const invoiceGenerator = data => {
     );
   });
 };
+const corsOptions = {
+  origin: "https://airbnb-clone-frontend-nu.vercel.app/",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
 
 app.listen(4000);
-
+app.use(cors(corsOptions));
 //middleware
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 const photoMiddleware = multer({ dest: "uploads" });
