@@ -50,6 +50,10 @@ mongoose
 
 //routes
 
+app.get("/", (req, res) => {
+  return res.send("ok");
+});
+
 app.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
   try {
