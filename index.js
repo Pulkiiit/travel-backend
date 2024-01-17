@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
-const easyinvoice = require("easyinvoice");
+// const easyinvoice = require("easyinvoice");
 const multer = require("multer");
 const imageDownloader = require("image-downloader");
 require("dotenv").config();
