@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs");
 // const easyinvoice = require("easyinvoice");
 const multer = require("multer");
+const cloudinary = require("cloudinary").v2;
 const imageDownloader = require("image-downloader");
 require("dotenv").config();
 const User = require("./models/User");
@@ -14,12 +15,19 @@ const Place = require("./models/Place");
 const Booking = require("./models/Booking");
 const payment = require("./routes/payment");
 const cookieParser = require("cookie-parser");
+const { log } = require("console");
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret =
   "nG8D#%-FpF+AK7b5b|tgy}B:UMzL/%&Y5>)?1c=@O 4,R!L!(?e8Lfvv`MNO#4Fs";
 
+// const corsOptions = {
+//   origin: "https://airbnb-clone-frontend-static.onrender.com",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true,
+//   optionsSuccessStatus: 204,
+// };
 const corsOptions = {
-  origin: "https://airbnb-clone-frontend-static.onrender.com",
+  origin: "http://localhost:5173",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
@@ -42,6 +50,12 @@ app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 const photoMiddleware = multer({ dest: "uploads" });
 app.use(express.json());
+
+cloudinary.config({
+  cloud_name: "dweg2dkqj",
+  api_key: "458517224595884",
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 //database
 mongoose
@@ -124,7 +138,18 @@ app.post("/upload-link", async (req, res) => {
     url: link,
     dest: __dirname + "/uploads/" + name,
   });
-  res.json({ name });
+  cloudinary.uploader.upload(
+    __dirname + "/uploads/" + name,
+    { public_id: name },
+    function (err, result) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+        res.json(result.url);
+      }
+    }
+  );
 });
 
 app.post("/upload", photoMiddleware.array("photos", 10), (req, res) => {
@@ -137,7 +162,21 @@ app.post("/upload", photoMiddleware.array("photos", 10), (req, res) => {
     fs.renameSync(path, newPath);
     uploadedFiles.push(newPath.replace("uploads\\", ""));
   }
-  res.json(uploadedFiles);
+  for (let i = 0; i < uploadedFiles.length; i++) {
+    cloudinary.uploader.upload(
+      uploadedFiles[i],
+      { public_id: uploadedFiles[i].split(".")[0] },
+      function (err, result) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(result);
+          res.json(result.url);
+        }
+      }
+    );
+  }
+  // res.json({ message: "Error eith cloudinary" });
 });
 
 app.post("/places", (req, res) => {
