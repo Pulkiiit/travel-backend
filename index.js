@@ -43,7 +43,19 @@ app.use(cors(corsOptions));
 //   });
 // };
 
-app.listen(process.env.PORT || 4000);
+app.listen(process.env.PORT || 4000, () => {
+  const directory = path.join(__dirname, "/uploads");
+
+  fs.readdir(directory, (err, files) => {
+    if (err) throw err;
+
+    for (const file of files) {
+      fs.unlink(path.join(directory, file), err => {
+        if (err) throw err;
+      });
+    }
+  });
+});
 
 //middleware
 app.use(cookieParser());
@@ -66,6 +78,9 @@ mongoose
 
 app.get("/", (req, res) => {
   return res.send("ok");
+});
+app.get("/delete-all-accomodations", async (req, res) => {
+  await Place.deleteMany({});
 });
 
 app.post("/register", async (req, res) => {
