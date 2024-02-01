@@ -21,18 +21,18 @@ const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret =
   "nG8D#%-FpF+AK7b5b|tgy}B:UMzL/%&Y5>)?1c=@O 4,R!L!(?e8Lfvv`MNO#4Fs";
 
-// const corsOptions = {
-//   origin: "https://airbnb-clone-frontend-static.onrender.com",
-//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//   credentials: true,
-//   optionsSuccessStatus: 204,
-// };
 const corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://airbnb-clone-frontend-static.onrender.com",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
 };
+// const corsOptions = {
+//   origin: "http://localhost:5173",
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   credentials: true,
+//   optionsSuccessStatus: 204,
+// };
 app.use(cors(corsOptions));
 // const invoiceGenerator = data => {
 //   easyinvoice.createInvoice(data, function (result) {
