@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
+const path = require("path");
 // const easyinvoice = require("easyinvoice");
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
