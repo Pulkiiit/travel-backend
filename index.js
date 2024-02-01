@@ -81,7 +81,8 @@ app.get("/", (req, res) => {
   return res.send("ok");
 });
 app.get("/delete-all-accomodations", async (req, res) => {
-  await Place.deleteMany({});
+  const response = await Place.deleteMany({});
+  return res.json(response);
 });
 
 app.post("/register", async (req, res) => {
