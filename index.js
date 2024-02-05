@@ -22,7 +22,10 @@ const jwtSecret =
   "nG8D#%-FpF+AK7b5b|tgy}B:UMzL/%&Y5>)?1c=@O 4,R!L!(?e8Lfvv`MNO#4Fs";
 
 const corsOptions = {
-  origin: "https://airbnb-clone-frontend-static.onrender.com",
+  origin: [
+    "https://airbnb-clone-frontend-static.onrender.com",
+    "https://pulkit-airbnb.netlify.app",
+  ],
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true,
   optionsSuccessStatus: 204,
