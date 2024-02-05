@@ -80,6 +80,7 @@ mongoose
 app.get("/", (req, res) => {
   return res.send("ok");
 });
+
 app.get("/delete-all-accomodations", async (req, res) => {
   const response = await Place.deleteMany({});
   return res.json(response);
@@ -163,7 +164,7 @@ app.post("/upload-link", async (req, res) => {
         console.log(err);
       } else {
         console.log(result);
-        res.json(result.url);
+        res.json(result.secure_url);
       }
     }
   );
@@ -188,7 +189,7 @@ app.post("/upload", photoMiddleware.array("photos", 10), (req, res) => {
           console.log(err);
         } else {
           console.log(result);
-          res.json(result.url);
+          res.json(result.secure_url);
         }
       }
     );
@@ -212,12 +213,11 @@ app.post("/places", (req, res) => {
       maxGuests,
       price,
     } = req.body;
-    const newAddedPhotos = addedPhotos.map(photo => photo.name);
     const place = Place.create({
       owner: user.id,
       title,
       address,
-      photos: newAddedPhotos,
+      photos: addedPhotos,
       description,
       perks,
       extraInfo,
